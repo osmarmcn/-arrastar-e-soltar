@@ -2,6 +2,7 @@
 
 const itemArrastavel = document.querySelectorAll(".itemArrastavel")
 const containerItem = document.querySelectorAll(".containerItem")
+const msg = document.getElementById('msg')
 
 
 itemArrastavel.forEach( item =>{
@@ -61,13 +62,46 @@ function itemSairContainer(){
     this.style.backgroundColor = 'rgba(0, 0, 0, 0)'
 }
 
-function soltarItemContainer(){
+
+async function soltarItemContainer(){
     this.style.backgroundColor = 'rgba(0, 0, 0, 0)'
 
     this.appendChild(itemArrastado)
 
     const acessorio = itemArrastado.getAttribute('data-acessorio-id')
-    console.log(acessorio)
+    //console.log(acessorio)
+
+    const carroId = document.getElementById('carroId').getAttribute('data-carro-id')
+
+    const formData = new FormData()
+    formData.append('acessorio_id', acessorio)
+    formData.append('carro_id', carroId)
+
+   let dados = await fetch('acessorio.php', {
+        method:"POST",
+        body:formData
+    })
+
+    let resposta = await dados.json()
+    //console.log(resposta)
+
+    if(resposta['status']){
+        msg.innerHTML = `<p style='color: green;'>${resposta['mensagem']}</p>` 
+
+        removerMsg()
+
+    }else{
+        msg.innerHTML =  `<p style='color: #f00;'>${resposta['mensagem']}</p>` 
+
+        removerMsg()
+
+    }
+
+}
 
 
+function removerMsg(){
+    setTimeout(() =>{
+        document.getElementById('msg').innerHTML = ""
+    },3000)
 }

@@ -1,3 +1,16 @@
+
+<?php
+
+$carro_id = 1;
+
+?>
+
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -8,6 +21,10 @@
 </head>
 <body>
     <h2 class="titulo">Cadastrar acessorios</h2>
+
+    <span id="msg"></span>
+
+    <span data-carro-id="<?php echo $carro_id; ?>" id="carroId"></span>
 
     <div class="areaDados">
         <h2>Disponivel</h2>
